@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthcareManagementApp.Views.PatientsPageView"
+             Title="PatientsPageView"
+             xmlns:viewmodels="clr-namespace:HealthcareManagementApp.ViewModels">
+
+
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to the Patients Page!"
+            FontSize="20"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Grid ColumnDefinitions="*,Auto" Margin="400,10" Padding="10">
+            <Entry
+                Grid.Column="0"
+                Placeholder="Enter Patient Name"
+                HeightRequest="50"
+                FontSize="25"
+                Margin="0, 0, 10, 0"
+                Text="{Binding SearchQuery, Mode=TwoWay}"
+                Completed="OnSearchEntryCompleted"
+            />
+            <Button
+                Grid.Column="1"
+                Text="Search"
+                Command="{Binding SearchCommand}"
+                WidthRequest="100"
+                HeightRequest="50"
+                FontSize="20"
+            />
+        </Grid>
+
+        <CollectionView ItemsSource="{Binding Patients}" Margin="30, 10, 30, 10">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="1" Margin="0,0,0,0" BorderColor="Gray" CornerRadius="7">
+                        <Grid ColumnDefinitions="*, Auto"  Margin="10, 10, 10, 10" RowSpacing="10">
+                            <StackLayout>
+                                <Label Text="{Binding Name}" FontSize="18" />
+                                <Label Text="{Binding Birthday, StringFormat='DOB: {0:MM/dd/yyyy}'}" FontSize="14" />
+                            </StackLayout>
+                            <Button Text="Delete"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PatientsManagerViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Grid.Column="1"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button
+            Text="Back"
+            Command="{Binding NavigateBack}" 
+            Margin="30,10,10,10"
+            FontSize="Medium"
+            HorizontalOptions="Start"
+            VerticalOptions="End"/>
+    </VerticalStackLayout>
+</ContentPage>

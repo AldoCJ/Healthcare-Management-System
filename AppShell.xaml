@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="HealthcareManagementApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:HealthcareManagementApp"
+    xmlns:view="clr-namespace:HealthcareManagementApp.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="HealthcareManagementApp">
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+    <ShellContent
+        Title="PatientsPage"
+        ContentTemplate="{DataTemplate view:PatientsPageView}"  
+        Route="Patients" />
+    <ShellContent
+        Title="PhysiciansPage"
+        ContentTemplate="{DataTemplate view:PhysiciansPageView}"  
+        Route="Physicians" />
+    <ShellContent
+        Title="AppointmentsPage"
+        ContentTemplate="{DataTemplate view:AppointmentsPageView}"  
+        Route="Appointments" />
+
+</Shell>
