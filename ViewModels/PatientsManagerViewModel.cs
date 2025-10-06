@@ -13,9 +13,10 @@ namespace HealthcareManagementApp.ViewModels
         private readonly PatientService patientService;
 
         private string searchQuery = string.Empty;
-        private Patient? selectedPatient;
+        //private Patient? selectedPatient;
         public ObservableCollection<Patient> Patients { get; set; }
         public ICommand NavigateBack { get; }
+        public ICommand NavigateToNewPatient { get; }
         public ICommand SearchCommand { get; }
         public ICommand DeleteCommand { get; }
 
@@ -31,6 +32,11 @@ namespace HealthcareManagementApp.ViewModels
             NavigateBack = new Command(async () =>
             {
                 await Shell.Current.GoToAsync("///MainPage");
+            });
+
+            NavigateToNewPatient = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync(nameof(Views.NewPatientView));
             });
 
             SearchCommand = new Command(Search);

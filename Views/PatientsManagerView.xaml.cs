@@ -4,9 +4,9 @@ using Microsoft.Maui.Controls;
 
 namespace HealthcareManagementApp.Views;
 
-public partial class PatientsPageView : ContentPage
+public partial class PatientsManagerView : ContentPage
 {
-	public PatientsPageView()
+	public PatientsManagerView()
 	{
 		InitializeComponent();
 
@@ -23,4 +23,15 @@ public partial class PatientsPageView : ContentPage
             vm.SearchCommand.Execute(null);
         }
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is PatientsManagerViewModel vm)
+        {
+            vm.Refresh();
+        }
+    }
+
 }

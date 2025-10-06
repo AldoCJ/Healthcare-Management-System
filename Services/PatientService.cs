@@ -13,10 +13,10 @@ namespace HealthcareManagementApp.Services
         public PatientService()
         {
             // Initialize with some sample data
-            patients.Add(new Patient("John Doe", "123 Main St", new DateOnly(1980, 5, 15), "Caucasian", "M", "No notes"));
-            patients.Add(new Patient("Alice Smith", "123 Main St", new DateOnly(1990, 5, 12), "Caucasian", "F", "No notes"));
-            patients.Add(new Patient("Bob Jones", "456 Oak Ave", new DateOnly(1985, 3, 8), "African American", "M", "Diabetic"));
-            patients.Add(new Patient("Charlie Brown", "789 Pine Rd", new DateOnly(1978, 11, 22), "Hispanic", "M", "Allergies"));
+            patients.Add(new Patient("John Doe", "123 Main St", new DateOnly(1980, 5, 15), "Caucasian", "Male", "No notes"));
+            patients.Add(new Patient("Alice Smith", "123 Main St", new DateOnly(1990, 5, 12), "Caucasian", "Female", "No notes"));
+            patients.Add(new Patient("Bob Jones", "456 Oak Ave", new DateOnly(1985, 3, 8), "African American", "Male", "Diabetic"));
+            patients.Add(new Patient("Charlie Brown", "789 Pine Rd", new DateOnly(1978, 11, 22), "Hispanic", "Male", "Allergies"));
         }
 
         public void AddPatient(Patient patient)

@@ -31,7 +31,7 @@ namespace HealthcareManagementApp.Models
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentNullException("Name cannot be empty!");
+                    throw new ArgumentException("Please enter a name");
                 name = value;
 
             }
@@ -43,7 +43,7 @@ namespace HealthcareManagementApp.Models
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentNullException("Address cannot be empty!");
+                    throw new ArgumentException("Please enter an address");
                 address = value;
 
             }
@@ -55,7 +55,7 @@ namespace HealthcareManagementApp.Models
             set
             {
                 if (value > DateOnly.FromDateTime(DateTime.Today))
-                    throw new ArgumentNullException("Birthday cannot be in the future!");
+                    throw new ArgumentException("Birthday cannot be in the future");
                 birthday = value;
 
             }
@@ -64,7 +64,12 @@ namespace HealthcareManagementApp.Models
         public string? Race
         {
             get { return race; }
-            set { race = value; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Please enter a race/ethnicity");
+                race = value;
+            }
         }
 
         public string? Gender
@@ -72,11 +77,11 @@ namespace HealthcareManagementApp.Models
             get { return gender; }
             set
             {
-                if (value == "m" || value == "f" || value == "M" || value == "F")
+                if (value == "Male" || value == "Female")
 
-                    gender = value.ToUpper();
+                    gender = value;
                 else
-                    throw new ArgumentException("Gender must be 'M' or 'F'");
+                    throw new ArgumentException("Gender must be Male or Female");
             }
         }
 
