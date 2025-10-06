@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthcareManagementApp.Views.NewPatientView"
+             Title="NewPatientView"
+             xmlns:viewmodels="clr-namespace:HealthcareManagementApp.ViewModels">
+    <VerticalStackLayout>
+        <Label 
+            Text="New Patient"
+            FontSize="30"
+            FontAttributes="Bold"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start" 
+            Margin="25, 0, 0, 0"/>
+
+        <Grid ColumnDefinitions="600,*,300" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" Margin="25,10,25,10" RowSpacing="10" ColumnSpacing="30">
+            <!-- Labels Row -->
+            <Label 
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Name"
+                FontSize="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Margin="0, 0, 10, 0"
+                />
+            <Label 
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="Date of Birth"
+                FontSize="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Margin="100, 0, 0, 0"
+                />
+
+            <Entry
+                Grid.Row="1"
+                Grid.Column="0"
+                Placeholder="Enter Patient Name"
+                HeightRequest="50"
+                
+                FontSize="25"
+                Margin="0, 0, 10, 0"
+                Text="{Binding Name, Mode=TwoWay}"
+                />
+            <DatePicker
+                Grid.Row="1"
+                Grid.Column="1"
+                Date="{Binding Birthday, Mode=TwoWay}"
+                HeightRequest="50"
+                FontSize="25"
+                Margin="100, 0, 10, 0"
+                />
+
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                Text="Home Address"
+                FontSize="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Margin="0, 20, 0, 0"
+                />
+            <Label
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="Race"
+                FontSize="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Margin="0, 20, 0, 0"
+                />
+            <Label
+                Grid.Row="2"
+                Grid.Column="2"
+                Text="Gender"
+                FontSize="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Margin="0, 20, 0, 0"
+                />
+
+            <Entry
+                Grid.Row="3"
+                Grid.Column="0"
+                Placeholder="Enter Patient Address"
+                HeightRequest="50"    
+                FontSize="25"
+                Margin="0, 0, 10, 0"
+                Text="{Binding Address, Mode=TwoWay}"
+                />
+            <Entry
+                Grid.Row="3"
+                Grid.Column="1"
+                Placeholder="Enter Patient Race"
+                HeightRequest="50"    
+                FontSize="25"
+                Margin="0, 0, 10, 0"
+                Text="{Binding Race, Mode=TwoWay}"
+                />
+            <Picker
+                Grid.Row="3"
+                Grid.Column="2"
+                HeightRequest="50"    
+                FontSize="25"
+                Margin="0, 0, 10, 0"
+                SelectedItem="{Binding Gender, Mode=TwoWay}">
+                <Picker.Items>
+                    <x:String>Male</x:String>
+                    <x:String>Female</x:String>
+                </Picker.Items>
+            </Picker>
+                <Label
+                Grid.Row="4"
+                Grid.Column="0"
+                Text="Medical Notes"
+                FontSize="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Margin="0, 20, 0, 0"
+                />
+            <Editor
+                Grid.Row="5"
+                Grid.Column="0"
+                Placeholder="Enter Patient Medical Notes"
+                HeightRequest="225"    
+                FontSize="20"
+                Margin="0, 0, 10, 0"
+                Text="{Binding MedicalNotes, Mode=TwoWay}"
+                />
+        </Grid>
+        <Grid ColumnDefinitions="*,Auto">
+            <Button
+                Grid.Column="0"
+                Text="Cancel"
+                BackgroundColor="Red"
+                Command="{Binding NavigateBack}"
+                WidthRequest="200"
+                HeightRequest="60"
+                FontSize="25"
+                HorizontalOptions="Start"
+                Margin="20,20,0,0"
+                />
+            <Button
+                Grid.Column="1"
+                Text="Save"
+                BackgroundColor="Green"
+                Command="{Binding SaveCommand}"
+                WidthRequest="200"
+                HeightRequest="60"
+                FontSize="25"
+                HorizontalOptions="End"
+                Margin="0, 0, 20, 0"
+                />
+        </Grid>
+        
+    </VerticalStackLayout>
+</ContentPage>

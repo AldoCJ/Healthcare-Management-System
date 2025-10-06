@@ -9,20 +9,10 @@
     Title="HealthcareManagementApp">
 
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-    <ShellContent
-        Title="PatientsPage"
-        ContentTemplate="{DataTemplate view:PatientsPageView}"  
-        Route="Patients" />
-    <ShellContent
-        Title="PhysiciansPage"
-        ContentTemplate="{DataTemplate view:PhysiciansPageView}"  
-        Route="Physicians" />
-    <ShellContent
-        Title="AppointmentsPage"
-        ContentTemplate="{DataTemplate view:AppointmentsPageView}"  
-        Route="Appointments" />
+    Title="Home"
+    ContentTemplate="{DataTemplate local:MainPage}"
+    Route="MainPage" />
+    
+    
 
 </Shell>
