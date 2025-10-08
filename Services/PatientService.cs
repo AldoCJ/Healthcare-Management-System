@@ -52,12 +52,16 @@ namespace HealthcareManagementApp.Services
         {
             lock (_lock)
             {
-                var existing = patients.FirstOrDefault(p => p.Equals(updatedPatient));
+                var existing = patients.FirstOrDefault(p => p.Id == updatedPatient.Id);
                 if (existing == null)
                     throw new KeyNotFoundException("Patient not found.");
 
-                patients.Remove(existing);
-                patients.Add(updatedPatient);
+                existing.Name = updatedPatient.Name;
+                existing.Address = updatedPatient.Address;
+                existing.Birthday = updatedPatient.Birthday;
+                existing.Gender = updatedPatient.Gender;
+                existing.Race = updatedPatient.Race;
+                existing.MedicalNotes = updatedPatient.MedicalNotes;
             }
         }
 

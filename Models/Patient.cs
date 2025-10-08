@@ -8,6 +8,8 @@ namespace HealthcareManagementApp.Models
 {
     public class Patient
     {
+
+        public Guid Id { get; private set; }
         private string? name;
         private string? address;
         private DateOnly birthday;
@@ -15,8 +17,10 @@ namespace HealthcareManagementApp.Models
         private string? gender;
         private string? medicalNotes;
 
+
         public Patient(string? _name, string? _address, DateOnly _birthday, string? _race, string? _gender, string? _medical_notes)
         {
+            Id = Guid.NewGuid(); 
             Name = _name;
             Address = _address;
             Birthday = _birthday;
@@ -95,12 +99,12 @@ namespace HealthcareManagementApp.Models
         {
             if (obj is not Patient other)
                 return false;
-            return string.Equals(this.Name, other.Name, StringComparison.OrdinalIgnoreCase) && (this.Birthday == other.Birthday);
+            return this.Id == other.Id;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Name?.ToLower(), Birthday);
+            return Id.GetHashCode();
         }
 
         public override string ToString()

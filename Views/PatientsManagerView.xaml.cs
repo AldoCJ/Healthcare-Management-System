@@ -18,7 +18,7 @@ public partial class PatientsManagerView : ContentPage
 
     private void OnSearchEntryCompleted(object sender, EventArgs e)
     {
-        if (BindingContext is HealthcareManagementApp.ViewModels.PatientsManagerViewModel vm)
+        if (BindingContext is PatientsManagerViewModel vm)
         {
             vm.SearchCommand.Execute(null);
         }
