@@ -6,9 +6,11 @@ using System.ComponentModel;
 
 namespace HealthcareManagementApp.ViewModels
 {
-    class NewPatientViewModel : INotifyPropertyChanged
+    [QueryProperty(nameof(SelectedPatient), "Patient")]
+    public class PatientViewModel : INotifyPropertyChanged
     {
         private readonly PatientService patientService;
+        private Patient? selectedPatient;
 
         // Properties for binding
         private string? name;
@@ -21,7 +23,7 @@ namespace HealthcareManagementApp.ViewModels
         public ICommand NavigateBack { get; }
         public ICommand SaveCommand { get; }
 
-        public NewPatientViewModel(PatientService _patientService)
+        public PatientViewModel(PatientService _patientService, Patient? patient = null)
         {
             patientService = _patientService;
 
@@ -31,6 +33,26 @@ namespace HealthcareManagementApp.ViewModels
             });
 
             SaveCommand = new Command(Save);
+
+        }
+
+        public Patient? SelectedPatient
+        {
+            get => selectedPatient;
+            set
+            {
+                selectedPatient = value;
+                if (selectedPatient != null)
+                {
+                    Name = selectedPatient.Name;
+                    Address = selectedPatient.Address;
+                    Birthday = selectedPatient.Birthday.ToDateTime(new TimeOnly(0, 0));
+                    Race = selectedPatient.Race;
+                    Gender = selectedPatient.Gender;
+                    MedicalNotes = selectedPatient.MedicalNotes;
+                }
+                NotifyPropertyChanged();
+            }
         }
 
         public string? Name
@@ -90,7 +112,22 @@ namespace HealthcareManagementApp.ViewModels
         {
             try
             {
-                var patient = new Patient(
+                if (selectedPatient != null)
+                {
+                    // Update existing patient
+                    selectedPatient.Name = Name;
+                    selectedPatient.Address = Address;
+                    selectedPatient.Birthday = DateOnly.FromDateTime(Birthday);
+                    selectedPatient.Race = Race;
+                    selectedPatient.Gender = Gender;
+                    selectedPatient.MedicalNotes = MedicalNotes;
+
+                    patientService.UpdatePatient(selectedPatient);
+                }
+
+                else
+                {
+                    var newPatient = new Patient(
                     Name,
                     Address,
                     DateOnly.FromDateTime(Birthday),
@@ -99,9 +136,9 @@ namespace HealthcareManagementApp.ViewModels
                     MedicalNotes
                 );
 
-                patientService.AddPatient(patient);
-
-                // Optionally navigate back after saving
+                    patientService.AddPatient(newPatient);
+                }
+             
                 await Shell.Current.GoToAsync("..");
             }
             catch (Exception ex)
@@ -110,7 +147,6 @@ namespace HealthcareManagementApp.ViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "OK");
                 }
-                // Optionally, handle the case where MainPage is null
             }
             
         }

@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HealthcareManagementApp.Views.NewPatientView"
-             Title="NewPatientView"
+             Title="PatientView"
              xmlns:viewmodels="clr-namespace:HealthcareManagementApp.ViewModels">
     <VerticalStackLayout>
         <Label 
-            Text="New Patient"
+            Text="Patient"
             FontSize="30"
             FontAttributes="Bold"
             VerticalOptions="Center" 

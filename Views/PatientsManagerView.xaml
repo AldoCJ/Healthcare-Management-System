@@ -36,16 +36,26 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Padding="1" Margin="0,0,0,0" BorderColor="Gray" CornerRadius="7">
-                        <Grid ColumnDefinitions="*, Auto"  Margin="10, 10, 10, 10" RowSpacing="10">
+                        <Grid ColumnDefinitions="*, Auto, Auto" Margin="10, 10, 10, 10" RowSpacing="10">
                             <StackLayout>
-                                <Label Text="{Binding Name}" FontSize="18" />
-                                <Label Text="{Binding Birthday, StringFormat='DOB: {0:MM/dd/yyyy}'}" FontSize="14" />
+                                <Label Text="{Binding Name}" FontSize="20" />
+                                <Label Text="{Binding Birthday, StringFormat='{0:MM/dd/yyyy}'}" FontSize="14" />
                             </StackLayout>
+                            <Button Text="View"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PatientsManagerViewModel}}, Path=EditCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Grid.Column="1"
+                                    VerticalOptions="Center" 
+                                    Margin="0,0,20,0"/>
                             <Button Text="Delete"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PatientsManagerViewModel}}, Path=DeleteCommand}"
                                     CommandParameter="{Binding .}"
-                                    Grid.Column="1"
-                                    VerticalOptions="Center" />
+                                    Grid.Column="2"
+                                    VerticalOptions="Center" 
+                                    BackgroundColor="IndianRed"
+                                    TextColor="Black"
+                                    />
+                            
                         </Grid>
                     </Frame>
                 </DataTemplate>

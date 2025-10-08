@@ -14,6 +14,6 @@ public partial class NewPatientView : ContentPage
         if (patientService == null)
             throw new InvalidOperationException("PatientService not registered in DI container.");
 
-        BindingContext = new NewPatientViewModel(patientService);
+        BindingContext = new PatientViewModel(patientService);
     }
 }
