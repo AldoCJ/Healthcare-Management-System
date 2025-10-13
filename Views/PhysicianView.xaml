@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthcareManagementApp.Views.PhysicianView"
+             Title="PhysicianView">
+    <VerticalStackLayout>
+        <Label 
+            Text="Physician"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start" 
+            FontSize="25"
+            FontAttributes="Bold"
+            Margin="30, 0, 0, 20"/>
+
+        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="10" ColumnSpacing="30" Margin="30, 0, 25, 0">
+            <Label 
+                Grid.Row="0"
+                Grid.Column="0"
+                Text="Name"
+                FontSize="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Margin="0, 0, 10, 0"
+                />
+            <Label 
+                Grid.Row="0"
+                Grid.Column="1"
+                Text="License Number"
+                FontSize="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Margin="0, 0, 0, 0"
+                />
+
+            <Entry
+                Grid.Row="1"
+                Grid.Column="0"
+                Placeholder="Enter Physician Name"
+                HeightRequest="50"
+                FontSize="25"
+                Margin="0, 0, 100, 0"
+                Text="{Binding Name, Mode=TwoWay}"
+                />
+            <Entry
+                Grid.Row="1"
+                Grid.Column="1"
+                Placeholder="Enter License Number"
+                HeightRequest="50"
+                FontSize="25"
+                Margin="0, 0, 100, 0"
+                Text="{Binding LicenseNumber, Mode=TwoWay}"
+                />
+
+            <Label 
+                Grid.Row="2"
+                Grid.Column="0"
+                Text="Specilizations"
+                FontSize="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Margin="0, 20, 0, 0"
+                />
+            <Label 
+                Grid.Row="2"
+                Grid.Column="1"
+                Text="Graduation Date"
+                FontSize="25"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                Margin="0, 20, 0, 0"
+                />
+
+            <Editor
+                Grid.Row="3"
+                Grid.Column="0"
+                Placeholder="Enter Physician Specilizations"
+                HeightRequest="225"    
+                FontSize="20"
+                Margin="0, 0, 100, 0"
+                Text="{Binding Specializations, Mode=TwoWay}"
+                />
+
+            <DatePicker
+                Grid.Row="3"
+                Grid.Column="1"
+                Date="{Binding GradDate, Mode=TwoWay}"
+                HeightRequest="50"
+                VerticalOptions="Start"
+                FontSize="25"
+                Margin="0, 0, 10, 0"
+                />
+        </Grid>
+
+
+        <Grid ColumnDefinitions="*,Auto">
+           <Button
+                Grid.Column="0"
+                Text="Cancel"
+                BackgroundColor="Red"
+                Command="{Binding NavigateBack}"
+                WidthRequest="200"
+                HeightRequest="60"
+                FontSize="25"
+                HorizontalOptions="Start"
+                Margin="20,20,0,0"
+                />
+           <Button
+                Grid.Column="1"
+                Text="Save"
+                BackgroundColor="Green"
+                Command="{Binding SaveCommand}"
+                WidthRequest="200"
+                HeightRequest="60"
+                FontSize="25"
+                HorizontalOptions="End"
+                Margin="0, 0, 20, 0"
+            />
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

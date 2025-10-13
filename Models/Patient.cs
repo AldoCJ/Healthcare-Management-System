@@ -8,7 +8,6 @@ namespace HealthcareManagementApp.Models
 {
     public class Patient
     {
-
         public Guid Id { get; private set; }
         private string? name;
         private string? address;
@@ -99,7 +98,7 @@ namespace HealthcareManagementApp.Models
         {
             if (obj is not Patient other)
                 return false;
-            return this.Id == other.Id;
+            return Id == other.Id;
         }
 
         public override int GetHashCode()

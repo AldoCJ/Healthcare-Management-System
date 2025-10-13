@@ -19,6 +19,8 @@ namespace HealthcareManagementApp
     		builder.Logging.AddDebug();
             var patientService = new Services.PatientService();
             builder.Services.AddSingleton(patientService);
+            var physicianService = new Services.PhysicianService();
+            builder.Services.AddSingleton(physicianService);
 #endif
 
             return builder.Build();
