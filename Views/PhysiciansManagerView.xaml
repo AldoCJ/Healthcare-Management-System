@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HealthcareManagementApp.Views.PhysiciansManagerView"
+             Title="PhysiciansManagerView"
+             xmlns:viewmodels="clr-namespace:HealthcareManagementApp.ViewModels">
+
+
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to the Physicians Page!"
+            FontSize="20"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Grid ColumnDefinitions="*,Auto" Margin="400,10" Padding="10">
+            <Entry
+                Grid.Column="0"
+                Placeholder="Enter Physician Name"
+                HeightRequest="50"
+                FontSize="25"
+                Margin="0, 0, 10, 0"
+                Text="{Binding SearchQuery, Mode=TwoWay}"
+                Completed="OnSearchEntryCompleted"
+            />
+            <Button
+                Grid.Column="1"
+                Text="Search"
+                Command="{Binding SearchCommand}"
+                WidthRequest="100"
+                HeightRequest="50"
+                FontSize="20"
+            />
+        </Grid>
+
+        <CollectionView ItemsSource="{Binding Physicians}" Margin="30, 10, 30, 10">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="1" Margin="0,0,0,0" BorderColor="Gray" CornerRadius="7">
+                        <Grid ColumnDefinitions="*, Auto, Auto" Margin="10, 10, 10, 10" RowSpacing="10">
+                            <StackLayout>
+                                <Label Text="{Binding Name, StringFormat='Dr. {0}'}" FontSize="25" />
+                            </StackLayout>
+                            <Button Text="View"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PhysiciansManagerViewModel}}, Path=EditCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Grid.Column="1"
+                                    VerticalOptions="Center" 
+                                    Margin="0,0,20,0"/>
+                            <Button Text="Delete"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:PhysiciansManagerViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Grid.Column="2"
+                                    VerticalOptions="Center" 
+                                    BackgroundColor="IndianRed"
+                                    TextColor="Black"
+                                    />
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Grid ColumnDefinitions="*,Auto" Margin="10,10,10,10">
+            <Button
+            Grid.Column="0"
+            Text="Back"
+            Command="{Binding NavigateBack}" 
+            Margin="30,10,10,10"
+            FontSize="Medium"
+            HorizontalOptions="Start"
+            VerticalOptions="End"/>
+            <Button
+                Grid.Column="1"
+                Text="Add Physician"
+                Command="{Binding NavigateToNewPhysician}" 
+                Margin="10,10,30,10"
+                FontSize="Medium"
+                HorizontalOptions="End"
+                VerticalOptions="End"/>
+        </Grid>
+
+
+    </VerticalStackLayout>
+</ContentPage>

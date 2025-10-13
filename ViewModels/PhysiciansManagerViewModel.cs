@@ -4,45 +4,45 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-
+using HealthcareManagementApp.Views;
 
 namespace HealthcareManagementApp.ViewModels
 {
-    public class PatientsManagerViewModel : INotifyPropertyChanged
+    public class PhysiciansManagerViewModel : INotifyPropertyChanged
     {
-        private readonly PatientService patientService;
+        private readonly PhysicianService physicianService;
 
         private string searchQuery = string.Empty;
-        public ObservableCollection<Patient> Patients { get; set; }
+        public ObservableCollection<Physician> Physicians { get; set; }
 
         public ICommand NavigateBack { get; }
-        public ICommand NavigateToNewPatient { get; }
+        public ICommand NavigateToNewPhysician { get; }
         public ICommand SearchCommand { get; }
         public ICommand DeleteCommand { get; }
         public ICommand EditCommand { get; }
 
         private System.Timers.Timer searchDebounceTimer;
-        private const int DebounceDelay = 500; 
+        private const int DebounceDelay = 500;
 
-        public PatientsManagerViewModel(PatientService _patientService)
+        public PhysiciansManagerViewModel(PhysicianService _physicianService)
         {
-            patientService = _patientService;
+            physicianService = _physicianService;
 
-            Patients = new ObservableCollection<Patient>(patientService.GetAllPatients());
+            Physicians = new ObservableCollection<Physician>(physicianService.GetAllPhysicians());
 
             NavigateBack = new Command(async () =>
             {
-                await Shell.Current.GoToAsync("///MainPage");
+                await Shell.Current.GoToAsync("..");
             });
 
-            NavigateToNewPatient = new Command(async () =>
+            NavigateToNewPhysician = new Command(async () =>
             {
-                await Shell.Current.GoToAsync(nameof(Views.NewPatientView));
+                await Shell.Current.GoToAsync(nameof(PhysicianView));
             });
 
             SearchCommand = new Command(Search);
-            DeleteCommand = new Command<Patient>(Delete);
-            EditCommand = new Command<Patient>(async (patient) => await Edit(patient));
+            DeleteCommand = new Command<Physician>(Delete);
+            EditCommand = new Command<Physician>(async (physician) => await Edit(physician));
 
             searchDebounceTimer = new System.Timers.Timer(DebounceDelay);
             searchDebounceTimer.Elapsed += (s, e) =>
@@ -63,47 +63,47 @@ namespace HealthcareManagementApp.ViewModels
                     NotifyPropertyChanged();
                 }
             }
-
         }
 
-        private void Delete(Patient patient)
+        private void Delete(Physician physician)
         {
-            if (patient != null)
+            if (physician != null)
             {
-                patientService.DeletePatient(patient);
-                Patients.Remove(patient);
-            }               
+                physicianService.DeletePhysician(physician);
+                Physicians.Remove(physician);
+            }
         }
 
-        private async Task Edit(Patient patient)
+        private async Task Edit(Physician physician)
         {
-            if (patient != null)
+            if (physician != null)
             {
                 var navigationParameter = new Dictionary<string, object>
                 {
-                    { "Patient", patient }
+                    { "Physician", physician }
                 };
 
-                await Shell.Current.GoToAsync(nameof(Views.NewPatientView), navigationParameter);
+                await Shell.Current.GoToAsync(nameof(Views.PhysicianView), navigationParameter);
             }
         }
 
         private void Search()
         {
-            IEnumerable<Patient> results;
+            IEnumerable<Physician> results;
             if (SearchQuery != "")
-            { results = patientService.GetPatientsByName(SearchQuery); }
+                results = physicianService.GetPhysiciansByName(SearchQuery);
             else
-            { results = patientService.GetAllPatients(); }
-            Patients.Clear();
-            foreach (var patient in results)
-                Patients.Add(patient);
+                results = physicianService.GetAllPhysicians();
+
+            Physicians.Clear();
+            foreach (var physician in results)
+                Physicians.Add(physician);
         }
 
         public void Refresh()
         {
-            Patients = new ObservableCollection<Patient>(patientService.GetAllPatients());
-            NotifyPropertyChanged(nameof(Patients));
+            Physicians = new ObservableCollection<Physician>(physicianService.GetAllPhysicians());
+            NotifyPropertyChanged(nameof(Physicians));
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

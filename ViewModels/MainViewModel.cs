@@ -19,7 +19,7 @@ namespace HealthcareManagementApp.ViewModels
 
             NavigateToPhysiciansCommand = new Command(async () =>
             {
-                await Shell.Current.GoToAsync(nameof(PhysiciansPageView));
+                await Shell.Current.GoToAsync(nameof(PhysiciansManagerView));
             });
 
             NavigateToAppointmentsCommand = new Command(async () =>

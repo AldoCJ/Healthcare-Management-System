@@ -8,6 +8,7 @@ namespace HealthcareManagementApp.Models
 {
     public class Physician
     {
+        public Guid Id { get; private set; }
         private string? name;
         private string? licenseNumber;
         private DateOnly gradDate;
@@ -15,6 +16,7 @@ namespace HealthcareManagementApp.Models
 
         public Physician(string? name, string? licenseNumber, DateOnly gradDate, string? specializations)
         {
+            Id = Guid.NewGuid();
             Name = name;
             LicenseNumber = licenseNumber;
             GradDate = gradDate;
@@ -27,7 +29,7 @@ namespace HealthcareManagementApp.Models
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                    throw new ArgumentNullException("Name cannot be empty!");
+                    throw new ArgumentException("Please enter a name");
                 name = value;
 
             }
@@ -35,7 +37,12 @@ namespace HealthcareManagementApp.Models
         public string? LicenseNumber
         {
             get { return licenseNumber; }
-            set { licenseNumber = value; }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Please enter a license number");
+                licenseNumber = value;
+            }
         }
 
         public DateOnly GradDate
@@ -44,26 +51,31 @@ namespace HealthcareManagementApp.Models
             set
             {
                 if (value > DateOnly.FromDateTime(DateTime.Today))
-                    throw new ArgumentException("Graduation date cannot be in the future!");
+                    throw new ArgumentException("Graduation date cannot be in the future");
                 gradDate = value;
             }
         }
         public string? Specializations
         {
             get { return specializations; }
-            set { specializations = value; }
+            set
+            {
+                 if (string.IsNullOrWhiteSpace(value))
+                    throw new ArgumentException("Please enter a specilization");
+                specializations = value;
+            }
         }
 
         public override bool Equals(object? obj)
         {
             if (obj is not Physician other)
                 return false;
-            return (licenseNumber == other.licenseNumber);
+            return (Id == other.Id);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(licenseNumber);
+            return Id.GetHashCode();
         }
 
         public override string ToString()
