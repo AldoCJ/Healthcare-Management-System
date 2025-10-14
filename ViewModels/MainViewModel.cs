@@ -24,7 +24,7 @@ namespace HealthcareManagementApp.ViewModels
 
             NavigateToAppointmentsCommand = new Command(async () =>
             {
-                await Shell.Current.GoToAsync(nameof(AppointmentsPageView));
+                await Shell.Current.GoToAsync(nameof(AppointmentsManagerView));
             });
         }
     }

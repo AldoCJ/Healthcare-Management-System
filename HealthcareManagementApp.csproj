@@ -63,6 +63,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\AppointmentsManagerView.xaml.cs">
+	    <DependentUpon>AppointmentsManagerView.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\PatientsManagerView.xaml.cs">
 	    <DependentUpon>PatientsManagerView.xaml</DependentUpon>
 	  </Compile>
@@ -72,7 +75,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\AppointmentsPageView.xaml">
+	  <MauiXaml Update="Views\AppointmentsManagerView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AppointmentView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\NewPatientView.xaml">
