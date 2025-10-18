@@ -12,7 +12,6 @@ namespace HealthcareManagementApp.Services
 
         public PatientService()
         {
-            // Initialize with some sample data
             patients.Add(new Patient("John Doe", "123 Main St", new DateOnly(1980, 5, 15), "Caucasian", "Male", "No notes"));
             patients.Add(new Patient("Alice Smith", "123 Main St", new DateOnly(1990, 5, 12), "Caucasian", "Female", "No notes"));
             patients.Add(new Patient("Bob Jones", "456 Oak Ave", new DateOnly(1985, 3, 8), "African American", "Male", "Diabetic"));
@@ -33,7 +32,6 @@ namespace HealthcareManagementApp.Services
         {
             lock (_lock)
             {
-                // Return a copy to avoid exposing internal list
                 return patients.ToList();
             }
         }

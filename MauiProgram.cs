@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
+
 namespace HealthcareManagementApp
 {
     public static class MauiProgram
@@ -7,6 +8,7 @@ namespace HealthcareManagementApp
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -16,12 +18,15 @@ namespace HealthcareManagementApp
                 });
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
+
+#endif
             var patientService = new Services.PatientService();
             builder.Services.AddSingleton(patientService);
             var physicianService = new Services.PhysicianService();
             builder.Services.AddSingleton(physicianService);
-#endif
+            var appointmentService = new Services.AppointmentService();
+            builder.Services.AddSingleton(appointmentService);
 
             return builder.Build();
         }

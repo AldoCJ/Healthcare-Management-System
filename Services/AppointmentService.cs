@@ -16,86 +16,92 @@ namespace HealthcareManagementApp.Services
 
             if (IsOverlapping(appointment))
             {
-                throw new InvalidOperationException("Physician is already booked during this time.");
+                throw new InvalidOperationException("Physician is already booked during this time");
+            }
+
+            if (appointment.StartTime >= appointment.EndTime)
+            {
+                throw new ArgumentException("Appointment start time must be before end time.");
+            }
+
+            if (appointment.StartTime < DateTime.Now)
+            {
+                throw new ArgumentException("Appointment cannot be in the past.");
             }
 
             appointments.Add(appointment);
         }
 
-        public void RemoveAppointment(int index)
+        public void RemoveAppointment(Appointment appointment)
         {
-            if (index >= 0 && index < appointments.Count)
-                appointments.RemoveAt(index);
+            var existing = appointments.FirstOrDefault(a => a.Id == appointment.Id);
+            if (existing != null)
+            {
+                appointments.Remove(existing);
+            }
             else
             {
-                throw new ArgumentOutOfRangeException(nameof(index), "Invalid appointment selection.");
+                throw new ArgumentOutOfRangeException("Appointment not found");
             }
         }
 
-        public void RescheduleAppointment(int index, DateTime newStart, DateTime newEnd)
+        public void DeletePatientAppointments(Guid patientId)
         {
-            if (index < 0 || index >= appointments.Count)
-                throw new ArgumentOutOfRangeException(nameof(index), "Invalid appointment index.");
-
-            if (newEnd <= newStart)
-                throw new ArgumentException("End time must be after start time.");
-
-            Appointment appointment = appointments[index];
-            var updated = new Appointment(newStart, newEnd, appointment.Patient, appointment.Physician);
-
-            if (IsOverlapping(updated, index))
-                throw new InvalidOperationException("New time conflicts with another appointment.");
-
-            appointment.StartTime = newStart;
-            appointment.EndTime = newEnd;
+            appointments.RemoveAll(a => a.Patient.Id == patientId);
         }
 
-        public IEnumerable<Appointment> GetPhysicianAppointments(Physician physician)
+        public void DeletePhysicianAppointments(Guid physicianId)
         {
-            return appointments.Where(a => a.Physician == physician);
+            appointments.RemoveAll(a => a.Physician.Id == physicianId);
         }
 
-        public IEnumerable<Appointment> GetPatientAppointments(Patient patient)
+        public void RescheduleAppointment(Appointment appointment, DateTime newStart, DateTime newEnd)
         {
-            return appointments.Where(a => a.Patient == patient);
+            if (newStart >= newEnd)
+            {
+                throw new ArgumentException("Start time must be before end time");
+            }
+
+            if (newStart < DateTime.Now)
+            {
+                throw new ArgumentException("Appointment cannot be in the past");
+            }
+
+            var existing = appointments.FirstOrDefault(a => a.Id == appointment.Id);
+
+            if (existing != null)
+                        {
+                var tempAppointment = new Appointment(newStart, newEnd, existing.Patient, existing.Physician);
+                if (IsOverlapping(tempAppointment, appointments.IndexOf(existing)))
+                {
+                    throw new InvalidOperationException("Physician is already booked during this time.");
+                }
+                existing.StartTime = newStart;
+                existing.EndTime = newEnd;
+            }
+            else
+            {
+                throw new Exception("Appointment not found");
+            }
         }
 
-        public void DeletePatientAppointments(Patient patient)
+
+        public IEnumerable<Appointment> GetPatientOrPhysicianAppointments(string patientName, string physicianName)
         {
-            appointments.RemoveAll(a => a.Patient.Equals(patient));
+            return appointments.Where(a => a.Patient.Name.Contains(patientName, StringComparison.OrdinalIgnoreCase) || 
+            a.Physician.Name.Contains(physicianName, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        public void DeletePhysicianAppointments(Physician physician)
+        public IEnumerable<Appointment> GetAllAppointments()
         {
-            appointments.RemoveAll(a => a.Physician.Equals(physician));
+            return appointments.ToList();
         }
-
-        public Appointment GetAppointment(int index) => appointments[index];
 
         public int NumberOfAppointments()
         {
             return appointments.Count;
         }
 
-        public void ShowAllAppointments()
-        {
-            Console.WriteLine("-------------------------------");
-            foreach (Appointment appointment in appointments)
-            {
-                Console.WriteLine($"{appointment}");
-                Console.WriteLine("-------------------------------");
-            }
-        }
-
-        public void ListAppointments()
-        {
-            int i = 1;
-            foreach (Appointment appointment in appointments)
-            {
-                Console.WriteLine($"{i}. {appointment.Patient.Name} with {appointment.Physician.Name} at {appointment.StartTime} ");
-                i++;
-            }
-        }
         private bool IsOverlapping(Appointment newAppointment, int ignoreIndex = -1)
         {
             for (int i = 0; i < appointments.Count; i++)
@@ -103,7 +109,7 @@ namespace HealthcareManagementApp.Services
                 if (i == ignoreIndex) continue;
 
                 var existing = appointments[i];
-                if (existing.Physician == newAppointment.Physician &&
+                if (existing.Physician.Id == newAppointment.Physician.Id &&
                     newAppointment.StartTime < existing.EndTime &&
                     newAppointment.EndTime > existing.StartTime)
                 {
@@ -112,6 +118,7 @@ namespace HealthcareManagementApp.Services
             }
             return false;
         }
+
     }
 
 }

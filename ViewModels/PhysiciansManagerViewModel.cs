@@ -11,6 +11,7 @@ namespace HealthcareManagementApp.ViewModels
     public class PhysiciansManagerViewModel : INotifyPropertyChanged
     {
         private readonly PhysicianService physicianService;
+        private readonly AppointmentService appointmentService;
 
         private string searchQuery = string.Empty;
         public ObservableCollection<Physician> Physicians { get; set; }
@@ -24,9 +25,10 @@ namespace HealthcareManagementApp.ViewModels
         private System.Timers.Timer searchDebounceTimer;
         private const int DebounceDelay = 500;
 
-        public PhysiciansManagerViewModel(PhysicianService _physicianService)
+        public PhysiciansManagerViewModel(PhysicianService _physicianService, AppointmentService _appointmentService)
         {
             physicianService = _physicianService;
+            appointmentService = _appointmentService;
 
             Physicians = new ObservableCollection<Physician>(physicianService.GetAllPhysicians());
 
@@ -69,6 +71,7 @@ namespace HealthcareManagementApp.ViewModels
         {
             if (physician != null)
             {
+                appointmentService.DeletePhysicianAppointments(physician.Id);
                 physicianService.DeletePhysician(physician);
                 Physicians.Remove(physician);
             }
