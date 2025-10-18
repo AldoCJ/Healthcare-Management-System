@@ -5,8 +5,111 @@
              Title="AppointmentView">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="Appointment View"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"
+            FontSize="30"/>
+
+        <Grid ColumnDefinitions="*,*,Auto" RowDefinitions="Auto,Auto" Margin="20,20,550,0">
+            <Label
+                Grid.Column="0"
+                Grid.Row="0"
+                Text="Date"
+                FontSize="25" />
+
+            <Label
+                Grid.Column="1"
+                Grid.Row="0"
+                Text="Start Time"
+                FontSize="25" />
+
+            <Label
+                Grid.Column="2"
+                Grid.Row="0"
+                Text="End Time"
+                FontSize="25" />
+
+            <DatePicker
+                Grid.Column="0"
+                Grid.Row="1"  
+                Date="{Binding Date, Mode=TwoWay}"
+                HeightRequest="50"
+                VerticalOptions="Start"
+                FontSize="25"
+                Margin="0, 0, 10, 0"
+                />
+
+            <TimePicker
+                Grid.Column="1"
+                Grid.Row="1"                
+                Time="{Binding StartTime, Mode=TwoWay}"
+                HeightRequest="50"
+                VerticalOptions="Start"
+                FontSize="25"
+                Margin="0, 0, 10, 0"
+                />
+
+            <TimePicker
+                Grid.Column="2"
+                Grid.Row="1"                
+                Time="{Binding EndTime, Mode=TwoWay}"
+                HeightRequest="50"
+                VerticalOptions="Start"
+                FontSize="25"
+                Margin="0, 0, 10, 0"
+                />
+
+        </Grid>
+
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="75" Margin="20">
+            <Picker
+                Grid.Column="0"
+                HeightRequest="80"
+                FontSize="20"
+                ItemsSource="{Binding Patients}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedPatient}"
+                Title="Select a patient" />
+
+            <Picker
+                Grid.Column="1"
+                HeightRequest="80"
+                FontSize="20"
+                ItemsSource="{Binding Physicians}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedPhysician}"
+                Title="Select a physician" />
+
+        </Grid>
+        
+
+        <Grid ColumnDefinitions="*,Auto">
+            <Button
+                Grid.Column="0"
+                Text="Cancel"
+                BackgroundColor="Red"
+                Command="{Binding NavigateBack}"
+                WidthRequest="200"
+                HeightRequest="60"
+                FontSize="25"
+                HorizontalOptions="Start"
+                Margin="20,20,0,0"
+                />
+            <Button
+                Grid.Column="1"
+                Text="Save"
+                BackgroundColor="Green"
+                Command="{Binding SaveCommand}"
+                WidthRequest="200"
+                HeightRequest="60"
+                FontSize="25"
+                HorizontalOptions="End"
+                Margin="0, 0, 20, 0"
+        />
+        </Grid>
+
+
+
+
     </VerticalStackLayout>
 </ContentPage>

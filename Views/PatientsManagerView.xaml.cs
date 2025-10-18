@@ -13,7 +13,11 @@ public partial class PatientsManagerView : ContentPage
 		var patientService = IPlatformApplication.Current.Services.GetService<PatientService>();
         if (patientService == null)
             throw new InvalidOperationException("PatientService not registered in DI container.");
-        BindingContext = new PatientsManagerViewModel(patientService);
+        var appointmentService = IPlatformApplication.Current.Services.GetService<AppointmentService>();
+        if (appointmentService == null)
+            throw new InvalidOperationException("PatientService not registered in DI container.");
+
+        BindingContext = new PatientsManagerViewModel(patientService, appointmentService);
     }
 
     private void OnSearchEntryCompleted(object sender, EventArgs e)

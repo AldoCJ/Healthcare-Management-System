@@ -8,6 +8,7 @@ namespace HealthcareManagementApp.Models
 {
     public class Appointment
     {
+        public Guid Id { get; private set; }
         private DateTime startTime;
         private DateTime endTime;
         private Patient patient;
@@ -21,7 +22,7 @@ namespace HealthcareManagementApp.Models
                 if (IsCorrectTime(value))
                     startTime = value;
                 else
-                    throw new ArgumentException("Appointment start time is invalid!");
+                    throw new ArgumentException("Hours are M-F 8am-5pm");
             }
 
         }
@@ -34,7 +35,7 @@ namespace HealthcareManagementApp.Models
                 if (IsCorrectTime(value))
                     endTime = value;
                 else
-                    throw new ArgumentException("Appointment end time is invalid!");
+                    throw new ArgumentException("Hours are M-F 8am-5pm");
             }
         }
 
@@ -52,6 +53,7 @@ namespace HealthcareManagementApp.Models
         {
             if (startTime < endTime)
             {
+                Id = Guid.NewGuid();
                 StartTime = startTime;
                 EndTime = endTime;
                 this.patient = patient;
@@ -81,7 +83,7 @@ namespace HealthcareManagementApp.Models
             TimeSpan start = new TimeSpan(8, 0, 0);  // 8:00 AM
             TimeSpan end = new TimeSpan(17, 0, 0); // 5:00 PM
 
-            return time >= start && time < end;
+            return time >= start && time <= end;
         }
 
     }

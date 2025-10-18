@@ -12,6 +12,7 @@
             Routing.RegisterRoute(nameof(Views.AppointmentsManagerView), typeof(Views.AppointmentsManagerView));
             Routing.RegisterRoute(nameof(Views.NewPatientView), typeof(Views.NewPatientView));
             Routing.RegisterRoute(nameof(Views.PhysicianView), typeof(Views.PhysicianView));
+            Routing.RegisterRoute(nameof(Views.AppointmentView), typeof(Views.AppointmentView));
 
         }
     }

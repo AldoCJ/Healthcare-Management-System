@@ -43,7 +43,7 @@
                                         <FormattedString>
                                             <FormattedString.Spans>
                                                 <Span Text="{Binding StartTime, StringFormat='{0:MM/dd/yyyy}'}" />
-                                                <Span Text=" | " />
+                                                <Span Text=" | Dr. " />
                                                 <Span Text="{Binding Physician.Name}" />
                                                 <Span Text=" with " />
                                                 <Span Text="{Binding Patient.Name}" />
@@ -85,7 +85,7 @@
             VerticalOptions="End"/>
             <Button
                 Grid.Column="1"
-                Text="Add Physician"
+                Text="Schedule Appointment"
                 Command="{Binding NavigateToNewAppointment}" 
                 Margin="10,10,30,10"
                 FontSize="Medium"
